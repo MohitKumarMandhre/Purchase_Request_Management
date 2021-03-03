@@ -1,0 +1,142 @@
+{% extends "crud/base.html" %} {% block content %} {% load crispy_forms_tags %}
+<br>
+<div>
+    <form method="POST" action="{%	url	'crud:list_view' %}" id="list_view" style="float:right">
+        <input type="hidden" name="form_type" value="fThree"> {% csrf_token %}
+        <input type="submit" value="OPEN LIST OF PREVIOUS REQUESTS" class="btn btn-success" />
+    </form>
+</div>
+<br>
+<h2 style="float:right">Please, use the following form to Save Changes :-</h2>
+
+<div class="column" style="background-color:#aaa;">
+    <form action="" method="POST" class="form-group" id='fOne' style="padding: 6px;">
+        <input type="hidden" name="form_type" value="fOne"> {% csrf_token %}
+        <!-- Document No. : <input type="text" name="documentNo" />
+        <br/> Document Date :<input type="date" name="documentDate">
+        <br/> -->
+        Company Name :
+        <select class="custom-select" name="companyName" id="companyName">
+            <option value="ABC Company">ABC Company</option>
+            <option value="DEF Company">DEF Company</option>
+            <option value="XYZ Company">XYZ Company</option>
+        </select>
+        <br> Indent Type :
+        <select class="custom-select" name="indentType" id="indentType">
+            <option value="Capital">Capital</option>
+            <option value="Revenue">Revenue</option>
+        </select>
+        <br> IsReserved
+        <input type="checkbox" value="isReserved"><br> Department :
+        <select class="custom-select" name="department" id="department">
+            <option value="Accounts">Accounts</option>
+            <option value="IT">IT</option>
+            <option value = "CIVIL">CIVIL</option>
+        </select><br> Charge Type :
+        <input type="radio" id="chargeable" name="chargeType" value="chargeable"> Chargeable
+        <!-- <label for="chargeable">Chargeable</label> -->
+        <input type="radio" id="nonChargeable" name="chargeType" value="nonChargeable"> Non-Chargeable
+        <!-- <label for="nonChargeable">Non-Chargeable</label> -->
+        <br> Requested By :
+        <input list="requestedBy" name="requestedBy">
+        <datalist id="requestedBy">
+            <option value="Rahul">
+            <option value="Siddhant">
+            <option value="Aditya">
+            <option value="Girdhar">
+            <option value="Tosiq">
+            </datalist><br> Indent Tag :
+        <select class="custom-select" name="indentTag" multiple="" contenteditable='true'>
+            <option value="Tag1">Tag1</option>
+            <option value="Tag2">Tag2</option>
+            <option value="Tag3">Tag3</option>
+            </select><br>Remarks :
+        <br>
+        <textarea cols="35" rows="8" name="remarks"></textarea><br><br>
+        <input type="submit" value="SUBMIT DATA" class="btn btn-light" />
+    </form>
+
+</div>
+
+<div class="column" style="background-color:#bbb;">
+    <form action="." method="POST" class='uniForm' id='fTwo' style="padding: 15px;">
+        <input type="hidden" name="form_type" value="fTwo"> {% csrf_token %}
+        <table>{{ f2.as_table }}</table><br>
+        <!-- Item Name :
+         <select name="itemName" id="itemName">
+        <option value="Item1">Item1</option>
+        <option value="Item2">Item2</option>
+        </select>
+        <br> Tech Specs :
+        <textarea cols="50" rows="2" name="techSpecs"></textarea>
+        <br> Make :
+        <select name="make" id="make">
+        <option value="metal">Metal</option>
+        <option value="plastic">Plastic</option>
+        </select>
+        <br> UOM :
+        <select name="uom" id="uom">
+        <option value="count">Count</option>
+        <option value="number">Number</option>
+        </select>
+        <br> Quantity :
+        <input type="number" id="quantity" name="quantity"><br> Rate :
+        <input type="number" id="rate" name="rate"><br> Amount :
+        <input type="number" id="amount" name="amount"><br> Required On :
+        <input type="date" name="requiredOn"><br> Remarks :
+        <textarea cols="50" rows="2" name="remarks"></textarea>
+        <br> -->
+        <input type="submit" value="ORDER ITEMS" class="btn btn-light" />
+    </form>
+</div>
+<div><br><br></div>
+<div>
+    <table class="table" style="border: 2px solid black;">
+        <tr style="border: 2px solid black;">
+            <thead class="thead-dark">
+                <th style="border: 1px solid black;">Item Name</th>
+                <th style="border: 1px solid black;">Make</th>
+                <th style="border: 1px solid black;">UOM</th>
+                <th style="border: 1px solid black;">Quantity</th>
+                <th style="border: 1px solid black;">Rate</th>
+                <th style="border: 1px solid black;">Amount</th>
+                <th style="border: 1px solid black;">Required On</th>
+                <th style="border: 1px solid black;">Remarks</th>
+                <th style="border: 1px solid black;">UPDATE</th>
+                <th style="border: 1px solid black;">DELETE</th>
+            </thead>
+        </tr>
+        {% for x in dataS %}
+        <tr>
+            <form action="{%	url	'crud:update_view2'	x.id	%}" method="post" id="update2" class="form-group">
+                <td style="border: 1px solid black;">{{ x.itemName }}</td>
+                <td style="border: 1px solid black;">{{ x.make }}</td>
+                <td style="border: 1px solid black;">{{ x.UOM}}</td>
+                <td style="border: 1px solid black;" contenteditable='true' id="qq">{{ x.quantity }}</td>
+                <td style="border: 1px solid black;">{{ x.rate }}</td>
+                <td style="border: 1px solid black;">{{ x.amount }}</td>
+                <td style="border: 1px solid black;">{{ x.requiredOn }}</td>
+                <td style="border: 1px solid black;" contenteditable='true' name="na">{{ x.remarks }}</td>
+                <td style="border: 1px solid black;">
+                    <!-- <input type="button" value="UPDATE"> -->
+                    <input type="submit" value="UPDATE" class="btn btn-primary"> {% csrf_token %}
+            </form>
+
+            </td>
+            <td style="border: 1px solid black;">
+                <!-- <input type="button" value="DELETE"> -->
+                <form method="POST" action="{%	url	'crud:delete_view2'	x.id %}" id="delete2">
+                    {% csrf_token %}
+                    <input type="submit" value="DELETE" class="btn btn-danger" />
+                </form>
+            </td>
+        </tr> {% endfor %}
+    </table>
+    <table class="table" style="border: 3px solid black;" id="result_totals">
+        <tr style="border: 3px solid black;">
+            <th style="border: 3px solid black;">TOTAL SUM</th>
+            <td style="border: 3px solid black;">{{ val }}</td>
+        </tr>
+    </table>
+</div>
+{% endblock %}

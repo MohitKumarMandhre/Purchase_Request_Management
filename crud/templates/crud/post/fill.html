@@ -1,0 +1,82 @@
+{% extends "crud/base.html" %} {% block content %} {% load crispy_forms_tags %}
+
+<h2>Please, use the following form :-</h2>
+
+<div class="row">
+    <div class="column" style="background-color:#aaa;">
+        <form action="." method="POST" class='uniForm' id='formOne'>
+            <input type="hidden" name="form_type" value="formOne">
+            <b>Company Name:    </b>
+            <input type="text" name="product" list="companyName" />
+            <datalist id="companyName">
+                <option value="ABC Company">ABC Company</option>
+                <option value="DEF Company">DEF Company</option>
+                <option value="XYZ Company">XYZ Company</option>
+            </datalist>
+            <table>{{ form.as_table}} </table>
+            {% csrf_token %}
+            <p><input type="submit" value="SUBMIT"></p>
+        </form>
+    </div>
+    <div class="column" style="background-color:#bbb;">
+        <form action="." method="POST" class='uniForm' id='formTwo'>
+            <input type="hidden" name="form_type" value="formTwo">
+            <table>{{ form2.as_table}} </table>
+            {% csrf_token %}
+            <p><input type="submit" value="OK"></p>
+            <!-- <p><input type="submit" value="UPDATE"  onClick='upDATA'></p> -->
+        </form>
+    </div>
+</div>
+
+<div>
+    <table style="border: 2px solid black;">
+        <tr style="border: 2px solid black;">
+            <th style="border: 1px solid black;">Item Code</th>
+            <th style="border: 1px solid black;">Item Name</th>
+            <th style="border: 1px solid black;">Make</th>
+            <th style="border: 1px solid black;">Unit</th>
+            <th style="border: 1px solid black;">Quantity</th>
+            <th style="border: 1px solid black;">Rate</th>
+            <th style="border: 1px solid black;">Amount</th>
+            <th style="border: 1px solid black;">Cost Center</th>
+            <th style="border: 1px solid black;">UPDATE</th>
+            <th style="border: 1px solid black;">DELETE</th>
+        </tr>
+        {% for x in dataS %}
+        <tr>
+            <td style="border: 1px solid black;">{{ x.itemCode }}</td>
+            <td style="border: 1px solid black;">{{ x.code }}</td>
+            <td style="border: 1px solid black;">{{ x.make }}</td>
+            <td style="border: 1px solid black;">{{ x.unit}}</td>
+            <td style="border: 1px solid black;" contenteditable='true'>{{ x.quantity }}</td>
+            <td style="border: 1px solid black;">{{ x.rate }}</td>
+            <td style="border: 1px solid black;">{{ x.amount }}</td>
+            <td style="border: 1px solid black;" contenteditable='true'>{{ x.center }}</td>
+            <td style="border: 1px solid black;">
+                <!-- <input type="button" value="UPDATE"> -->
+                <form action="{%	url	'crud:update_view'	x.id	%}" method="post" id="update">
+                    <input type="submit" value="UPDATE"> {% csrf_token %}
+                </form>
+
+            </td>
+            <td style="border: 1px solid black;">
+                <!-- <input type="button" value="DELETE"> -->
+                <form method="POST" action="{%	url	'crud:delete_view'	x.id	%}" id="delete">
+                    {% csrf_token %}
+                    <input type="submit" value="DELETE" />
+                </form>
+            </td>
+        </tr> {% endfor %}
+    </table>
+    <table style="border: 3px solid black;" id="result_totals">
+        <tr style="border: 3px solid black;">
+            <th style="border: 3px solid black;">TOTAL SUM</th>
+            <td style="border: 3px solid black;">{{ val }}</td>
+        </tr>
+    </table>
+</div>
+<!-- <div>
+    {{ order }}
+</div> -->
+{% endblock %}

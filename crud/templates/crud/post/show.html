@@ -1,0 +1,5 @@
+<h3>this is to show details</h3>
+
+{% extends "crud/base.html" %} {% block content %} {{ cd }} {% for i in k %}
+<li>{{ i }}</li> {% endfor %} {% for i in v %}
+<ol>{{ i }}</ol> {% endfor %} {% endblock %}

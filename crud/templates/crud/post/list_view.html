@@ -1,0 +1,31 @@
+<h2 style="padding-left: 350px;">This is a list of previous REQUESTS :-</h2>
+<br> {% extends "crud/base.html" %} {% block content %}
+<table class="table" style="border: 3px solid black;">
+    <thead class="thead-dark">
+        <tr style="border: 3px solid black;">
+            <th style="border: 1px solid black;">Company Name</th>
+            <th style="border: 1px solid black;">Requested By</th>
+            <th style="border: 1px solid black;">Document Number</th>
+            <th style="border: 1px solid black;">Document Date</th>
+            <th style="border: 1px solid black;">Remarks</th>
+            <th style="border: 1px solid black;">OPTION TO EDIT</th>
+        </tr>
+    </thead>
+    {% for x in j %}
+    <tr>
+        <td style="border: 1px solid black;">{{ x.companyName }}</td>
+        <td style="border: 1px solid black;">{{ x.requestedBy }}</td>
+        <td style="border: 1px solid black;">{{ x.dN}}</td>
+        <td style="border: 1px solid black;">{{ x.dD }}</td>
+        <td style="border: 1px solid black;">{{ x.remarks }}</td>
+        <td style="border: 1px solid black;">
+            <!-- <input type="button" value="UPDATE"> -->
+            <form action="{%	url	'crud:open'	x.id	%}" method="post" id="open">
+                <input type="submit" value="OPEN" class="btn btn-warning"> {% csrf_token %}
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

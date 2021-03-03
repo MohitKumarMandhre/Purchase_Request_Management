@@ -1,0 +1,14 @@
+{% extends "crud/base.html" %} {% block title %}INVENTORY{% endblock %} {% block content %}
+<h1>INVENTORY ARTICLES</h1>
+{% for post in posts %}
+<h4>
+    <a href="{{	post.get_absolute_url	}}">
+	{{	post.itemName	}}
+    </a></h4>
+<p class="date">
+    <b>techSpecs :- </b> {{ post.techSpecs }}
+</p>
+<p><b>rate:- </b> {{ post.rate }}</p>
+
+
+{{ post.body|truncatewords:30|linebreaks }} {% endfor %} {% endblock %}
